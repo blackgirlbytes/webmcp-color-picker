@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build a WebMCP Site - Tutorial</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #f9fafb;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: #374151;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #4b5563;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .step {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-number {
+      display: inline-block;
+      background: #6366f1;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 28px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+
+    pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    code {
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    }
+
+    .inline-code {
+      background: #e5e7eb;
+      color: #374151;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    .highlight {
+      background: #fef3c7;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #f59e0b;
+      margin: 1rem 0;
+    }
+
+    .comment {
+      color: #6b7280;
+    }
+
+    .keyword {
+      color: #c084fc;
+    }
+
+    .string {
+      color: #86efac;
+    }
+
+    .property {
+      color: #7dd3fc;
+    }
+
+    .files {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .file-card {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .file-card.active {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+
+    .file-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .file-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .file-desc {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .demo-link {
+      display: inline-block;
+      background: #6366f1;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .demo-link:hover {
+      background: #4f46e5;
+    }
+
+    /* Comparison table */
+    .comparison {
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    th:first-child {
+      width: 30%;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Value points */
+    .value-point {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .value-point strong {
+      color: #4f46e5;
+    }
+
+    .value-point ul {
+      margin: 0.5rem 0 0 1.5rem;
+    }
+
+    .value-point li {
+      margin: 0.25rem 0;
+    }
+
+    .anatomy {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .anatomy-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .anatomy-item:last-child {
+      border-bottom: none;
+    }
+
+    .anatomy-label {
+      background: #ddd6fe;
+      color: #5b21b6;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      min-width: 120px;
+      margin-right: 1rem;
+    }
+
+    .anatomy-desc {
+      flex: 1;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Building a WebMCP Site</h1>
+    <p class="subtitle">A simple tutorial on exposing tools to AI agents</p>
+
+    <!-- What is WebMCP -->
+    <h2>What is WebMCP?</h2>
+    <p>
+      WebMCP is a proposed web standard that lets websites expose <strong>structured tools</strong> 
+      to AI agents. Instead of AI guessing how to interact with your UI, you tell it exactly 
+      what actions are available.
+    </p>
+    <div class="highlight">
+      <strong>Think of it like this:</strong> Without WebMCP, AI has to "screen scrape" and guess 
+      what buttons do. With WebMCP, your site provides an API that AI can call directly.
+    </div>
+
+    <!-- MCP vs WebMCP -->
+    <h2>MCP vs WebMCP - What's the Difference?</h2>
+    <p>You might be wondering: why WebMCP when we already have MCP?</p>
+    
+    <div class="comparison">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>MCP</th>
+            <th>WebMCP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Where it runs</strong></td>
+            <td>Server-side</td>
+            <td>Client-side (browser)</td>
+          </tr>
+          <tr>
+            <td><strong>Who builds it</strong></td>
+            <td>You deploy & maintain a server</td>
+            <td>Website adds some JS/HTML</td>
+          </tr>
+          <tr>
+            <td><strong>Access</strong></td>
+            <td>Need API keys, auth, infrastructure</td>
+            <td>Just visit the website</td>
+          </tr>
+          <tr>
+            <td><strong>Updates</strong></td>
+            <td>You update your server</td>
+            <td>Website owner updates their site</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Real Value of WebMCP</h3>
+    
+    <div class="value-point">
+      <strong>1. Websites expose their own tools</strong>
+      <p>
+        With MCP, if you want AI to book a flight on United.com, <em>you</em> have to build a server 
+        that scrapes/automates their site, maintain it when their site changes, and handle auth and rate limits.
+      </p>
+      <p>With WebMCP, <strong>United builds it once</strong> and every AI agent can use it.</p>
+    </div>
+
+    <div class="value-point">
+      <strong>2. No middle-man</strong>
+      <pre><code>MCP:     AI → Your MCP Server → Website
+WebMCP:  AI → Website (directly)</code></pre>
+    </div>
+
+    <div class="value-point">
+      <strong>3. The website knows best</strong>
+      <p>
+        Who knows better how to book a flight on United.com - you, or United? 
+        WebMCP lets the website author define exactly what's possible.
+      </p>
+    </div>
+
+    <div class="value-point">
+      <strong>4. Scales to the whole web</strong>
+      <p>Imagine if every website had WebMCP tools:</p>
+      <ul>
+        <li>Amazon: <span class="inline-code">add_to_cart</span>, <span class="inline-code">checkout</span></li>
+        <li>Gmail: <span class="inline-code">send_email</span>, <span class="inline-code">search_inbox</span></li>
+        <li>Banks: <span class="inline-code">transfer_money</span>, <span class="inline-code">check_balance</span></li>
+      </ul>
+      <p>You wouldn't need to build MCP servers for each one.</p>
+    </div>
+
+    <div class="highlight">
+      <strong>TL;DR:</strong> With MCP, you build tools for websites. With WebMCP, websites build tools for you.
+      It's like websites publishing their own API for AI agents.
+    </div>
+
+    <!-- File Structure -->
+    <h2>Our Project Structure</h2>
+    <div class="files">
+      <div class="file-card">
+        <div class="file-icon">📄</div>
+        <div class="file-name">index.html</div>
+        <div class="file-desc">Page structure</div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">🎨</div>
+        <div class="file-name">style.css</div>
+        <div class="file-desc">Styling</div>
+      </div>
+      <div class="file-card active">
+        <div class="file-icon">⚡</div>
+        <div class="file-name">webmcp.js</div>
+        <div class="file-desc">The magic!</div>
+      </div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-title"><span class="step-number">1</span> Check if WebMCP is Available</div>
+      <p>WebMCP only works in Chrome 146+ with the flag enabled. Always check first:</p>
+      <pre><code><span class="keyword">if</span> (window.navigator.modelContext) {
+  <span class="comment">// WebMCP is available, register tools here</span>
+} <span class="keyword">else</span> {
+  console.log(<span class="string">"WebMCP not available"</span>);
+}</code></pre>
+      <p>This prevents errors on browsers that don't support WebMCP yet.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-title"><span class="step-number">2</span> Register a Tool</div>
+      <p>Use <span class="inline-code">registerTool()</span> to expose a function to AI agents:</p>
+      <pre><code>window.navigator.modelContext.registerTool({
+  <span class="property">name</span>: <span class="string">"set_background_color"</span>,
+  <span class="property">description</span>: <span class="string">"Changes the background color..."</span>,
+  <span class="property">inputSchema</span>: { ... },
+  <span class="property">execute</span>: ({ color }) => { ... }
+});</code></pre>
+    </div>
+
+    <!-- Step 3: Anatomy -->
+    <div class="step">
+      <div class="step-title"><span class="step-number">3</span> Anatomy of a Tool</div>
+      <p>Each tool has 4 required parts:</p>
+      
+      <div class="anatomy">
+        <div class="anatomy-item">
+          <span class="anatomy-label">name</span>
+          <span class="anatomy-desc">
+            The tool's identifier. AI calls this name to invoke the tool.<br>
+            <span class="inline-code">"set_background_color"</span>
+          </span>
+        </div>
+        <div class="anatomy-item">
+          <span class="anatomy-label">description</span>
+          <span class="anatomy-desc">
+            Tells AI <em>what</em> the tool does and <em>when</em> to use it. Be descriptive!<br>
+            <span class="inline-code">"Changes the background color of the page..."</span>
+          </span>
+        </div>
+        <div class="anatomy-item">
+          <span class="anatomy-label">inputSchema</span>
+          <span class="anatomy-desc">
+            A JSON Schema defining what parameters the tool accepts, their types, and which are required.
+          </span>
+        </div>
+        <div class="anatomy-item">
+          <span class="anatomy-label">execute</span>
+          <span class="anatomy-desc">
+            The function that runs when AI calls the tool. Receives parameters, does the work, returns a result.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Input Schema -->
+    <div class="step">
+      <div class="step-title"><span class="step-number">4</span> Define the Input Schema</div>
+      <p>The schema tells AI what parameters your tool accepts:</p>
+      <pre><code><span class="property">inputSchema</span>: {
+  <span class="property">type</span>: <span class="string">"object"</span>,
+  <span class="property">properties</span>: {
+    <span class="property">color</span>: {
+      <span class="property">type</span>: <span class="string">"string"</span>,
+      <span class="property">description</span>: <span class="string">"The color to set. Can be hex (#ff5733), 
+                     RGB, or named color (coral, navy)"</span>
+    }
+  },
+  <span class="property">required</span>: [<span class="string">"color"</span>]
+}</code></pre>
+      <div class="highlight">
+        <strong>Tip:</strong> Good descriptions help AI understand what format to use. 
+        Include examples like "hex (#ff5733)" or "named color (coral)".
+      </div>
+    </div>
+
+    <!-- Step 5: Execute Function -->
+    <div class="step">
+      <div class="step-title"><span class="step-number">5</span> Write the Execute Function</div>
+      <p>This is where the actual work happens:</p>
+      <pre><code><span class="property">execute</span>: ({ color }) => {
+  <span class="comment">// 1. Do the actual work</span>
+  document.body.style.backgroundColor = color;
+  
+  <span class="comment">// 2. Update any UI elements</span>
+  document.getElementById(<span class="string">"colorName"</span>).textContent = color;
+  
+  <span class="comment">// 3. Return a result for the AI</span>
+  <span class="keyword">return</span> {
+    content: [{
+      type: <span class="string">"text"</span>,
+      text: <span class="string">`Background color changed to </span>${color}<span class="string">`</span>
+    }]
+  };
+}</code></pre>
+      <p>The return value tells AI what happened - important for multi-step tasks!</p>
+    </div>
+
+    <!-- Full Code -->
+    <h2>The Complete Code</h2>
+    <p>Here's the full <span class="inline-code">webmcp.js</span> file:</p>
+    <pre><code><span class="keyword">if</span> (window.navigator.modelContext) {
+  window.navigator.modelContext.registerTool({
+    <span class="property">name</span>: <span class="string">"set_background_color"</span>,
+    <span class="property">description</span>: <span class="string">"Changes the background color of the page. Accepts any valid CSS color (hex, rgb, named colors like 'coral', 'forestgreen', etc.)"</span>,
+    <span class="property">inputSchema</span>: {
+      <span class="property">type</span>: <span class="string">"object"</span>,
+      <span class="property">properties</span>: {
+        <span class="property">color</span>: {
+          <span class="property">type</span>: <span class="string">"string"</span>,
+          <span class="property">description</span>: <span class="string">"The color to set. Can be a hex code (#ff5733), RGB (rgb(255,87,51)), or named color (coral, navy, forestgreen)"</span>
+        }
+      },
+      <span class="property">required</span>: [<span class="string">"color"</span>]
+    },
+    <span class="property">execute</span>: ({ color }) => {
+      document.body.style.backgroundColor = color;
+      document.getElementById(<span class="string">"colorName"</span>).textContent = color;
+      
+      <span class="keyword">return</span> {
+        content: [{
+          type: <span class="string">"text"</span>,
+          text: <span class="string">`Background color changed to </span>${color}<span class="string">`</span>
+        }]
+      };
+    }
+  });
+
+  console.log(<span class="string">"✅ WebMCP tool registered!"</span>);
+} <span class="keyword">else</span> {
+  console.log(<span class="string">"⚠️ WebMCP not available"</span>);
+}</code></pre>
+
+    <!-- Try It -->
+    <h2>Try It Out!</h2>
+    <p>
+      With Chrome Canary (146+) and the WebMCP flag enabled, visit the demo and ask an AI:
+      <em>"Change the background to coral"</em>
+    </p>
+    <a href="index.html" class="demo-link">View the Demo →</a>
+
+    <!-- Requirements -->
+    <h2>Requirements</h2>
+    <div class="step">
+      <h3>1. Chrome Canary (version 146+)</h3>
+      <p>Download from <a href="https://www.google.com/chrome/canary/">google.com/chrome/canary</a></p>
+      
+      <h3>2. Enable the WebMCP Flag</h3>
+      <p>Go to <span class="inline-code">chrome://flags/#enable-webmcp-testing</span> and set to <strong>Enabled</strong></p>
+      
+      <h3>3. Relaunch Chrome</h3>
+      <p>Click the relaunch button after enabling the flag</p>
+    </div>
+
+  </div>
+</body>
+</html>
