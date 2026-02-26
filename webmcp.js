@@ -29,29 +29,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const applyButton = document.getElementById("applyColor");
 
   // Color picker change
-  colorPicker.addEventListener("input", (e) => {
-    setBackgroundColor(e.target.value);
-  });
+  if (colorPicker) {
+    colorPicker.addEventListener("input", (e) => {
+      setBackgroundColor(e.target.value, false);
+    });
+  }
 
   // Apply button click
-  applyButton.addEventListener("click", () => {
-    const color = colorText.value.trim();
-    if (color) {
-      setBackgroundColor(color);
-      colorText.value = "";
-    }
-  });
-
-  // Enter key in text input
-  colorText.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
+  if (applyButton) {
+    applyButton.addEventListener("click", () => {
       const color = colorText.value.trim();
       if (color) {
-        setBackgroundColor(color);
+        setBackgroundColor(color, false);
         colorText.value = "";
       }
-    }
-  });
+    });
+  }
+
+  // Enter key in text input
+  if (colorText) {
+    colorText.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const color = colorText.value.trim();
+        if (color) {
+          setBackgroundColor(color, false);
+          colorText.value = "";
+        }
+      }
+    });
+  }
 });
 
 // WebMCP Color Picker Tool Registration
