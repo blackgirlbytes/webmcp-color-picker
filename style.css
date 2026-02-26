@@ -4,6 +4,37 @@
   box-sizing: border-box;
 }
 
+nav {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+nav a {
+  background: rgba(255, 255, 255, 0.9);
+  color: #374151;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+nav a:hover {
+  background: white;
+  transform: translateY(-1px);
+}
+
+nav a.active {
+  background: #6366f1;
+  color: white;
+}
+
 body {
   min-height: 100vh;
   display: flex;
@@ -47,6 +78,69 @@ h1 {
 .color-name {
   font-weight: bold;
   color: #374151;
+}
+
+.ai-badge {
+  display: none;
+  background: #10b981;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.ai-badge.show {
+  display: inline-block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.color-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#colorPicker {
+  width: 50px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+}
+
+#colorText {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+#colorText:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+#applyColor {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#applyColor:hover {
+  background: #4f46e5;
 }
 
 .instructions {

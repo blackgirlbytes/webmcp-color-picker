@@ -11,6 +11,37 @@
       box-sizing: border-box;
     }
 
+    nav {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    nav a {
+      background: rgba(255, 255, 255, 0.9);
+      color: #374151;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover {
+      background: white;
+      transform: translateY(-1px);
+    }
+
+    nav a.active {
+      background: #6366f1;
+      color: white;
+    }
+
     body {
       font-family: system-ui, -apple-system, sans-serif;
       line-height: 1.6;
@@ -273,6 +304,10 @@
   </style>
 </head>
 <body>
+  <nav>
+    <a href="index.html">Demo</a>
+    <a href="tutorial.html" class="active">Tutorial</a>
+  </nav>
   <div class="container">
     <h1>🎨 Building a WebMCP Site</h1>
     <p class="subtitle">A simple tutorial on exposing tools to AI agents</p>

@@ -1,5 +1,60 @@
-// WebMCP Color Picker Tool Registration
+// Shared function to change the color
+function setBackgroundColor(color, fromAI = false) {
+  document.body.style.backgroundColor = color;
+  document.getElementById("colorName").textContent = color;
+  
+  // Sync the color picker if it's a valid hex
+  const colorPicker = document.getElementById("colorPicker");
+  if (colorPicker && color.startsWith("#") && color.length === 7) {
+    colorPicker.value = color;
+  }
 
+  // Show/hide AI badge
+  const aiBadge = document.getElementById("aiBadge");
+  if (aiBadge) {
+    if (fromAI) {
+      aiBadge.classList.add("show");
+      // Hide after 3 seconds
+      setTimeout(() => aiBadge.classList.remove("show"), 3000);
+    } else {
+      aiBadge.classList.remove("show");
+    }
+  }
+}
+
+// Manual color controls
+document.addEventListener("DOMContentLoaded", () => {
+  const colorPicker = document.getElementById("colorPicker");
+  const colorText = document.getElementById("colorText");
+  const applyButton = document.getElementById("applyColor");
+
+  // Color picker change
+  colorPicker.addEventListener("input", (e) => {
+    setBackgroundColor(e.target.value);
+  });
+
+  // Apply button click
+  applyButton.addEventListener("click", () => {
+    const color = colorText.value.trim();
+    if (color) {
+      setBackgroundColor(color);
+      colorText.value = "";
+    }
+  });
+
+  // Enter key in text input
+  colorText.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const color = colorText.value.trim();
+      if (color) {
+        setBackgroundColor(color);
+        colorText.value = "";
+      }
+    }
+  });
+});
+
+// WebMCP Color Picker Tool Registration
 if (window.navigator.modelContext) {
   window.navigator.modelContext.registerTool({
     name: "set_background_color",
@@ -15,13 +70,8 @@ if (window.navigator.modelContext) {
       required: ["color"]
     },
     execute: ({ color }) => {
-      // Set the background color
-      document.body.style.backgroundColor = color;
+      setBackgroundColor(color, true); // true = from AI
 
-      // Update the display
-      document.getElementById("colorName").textContent = color;
-
-      // Return success message
       return {
         content: [{
           type: "text",

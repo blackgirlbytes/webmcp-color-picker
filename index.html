@@ -7,17 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav>
+    <a href="index.html" class="active">Demo</a>
+    <a href="tutorial.html">Tutorial</a>
+  </nav>
   <div class="container">
     <h1>🎨 WebMCP Color Picker</h1>
     <p class="subtitle">Ask an AI to change my background!</p>
 
     <div class="current-color">
       Current color: <span class="color-name" id="colorName">#6366f1</span>
+      <span class="ai-badge" id="aiBadge">🤖 AI changed this!</span>
+    </div>
+
+    <div class="color-input-group">
+      <input type="color" id="colorPicker" value="#6366f1">
+      <input type="text" id="colorText" placeholder="coral, #ff5733, etc." >
+      <button id="applyColor">Apply</button>
     </div>
 
     <p class="instructions">
-      Try: "Change the background to coral"<br>
-      or "Make it a nice forest green"
+      Pick a color above, or ask an AI:<br>
+      "Change the background to coral"
     </p>
   </div>
 
