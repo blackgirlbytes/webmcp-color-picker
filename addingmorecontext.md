@@ -132,6 +132,25 @@ The agent API is `navigator.modelContextTesting` with two methods:
 - `executeTool(name, jsonStringifiedArgs)` - executes a tool
 ```
 
+## Why Listing Known WebMCP Sites Matters
+
+The agent has no way to automatically detect if a site is WebMCP-enabled. Without an explicit list of known WebMCP sites in the goosehints file, the agent might:
+
+1. Not know to check for WebMCP tools at all
+2. Default to screen-scraping instead of using the structured API
+3. Waste time trying to figure out how to interact with the page
+
+By maintaining a list like:
+
+```markdown
+# WebMCP-Enabled Sites
+
+These sites support WebMCP:
+- googlechromelabs.github.io/webmcp-tools/*
+```
+
+The agent can immediately recognize when it's on a WebMCP-enabled site and use the correct API pattern. As more sites adopt WebMCP, this list can be expanded.
+
 ## What the Correct Interaction Should Look Like
 
 ### Step 1: Navigate to the page
