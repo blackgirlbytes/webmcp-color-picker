@@ -527,7 +527,7 @@ WebMCP:  AI → Website (directly)</code></pre>
 
     <!-- Full Code -->
     <h2>The Complete Code</h2>
-    <p>Here's the full <span class="inline-code">webmcp.js</span> file:</p>
+    <p>Here's the WebMCP registration part of <span class="inline-code">webmcp.js</span>:</p>
     <pre><code><span class="keyword">if</span> (window.navigator.modelContext) {
   window.navigator.modelContext.registerTool({
     <span class="property">name</span>: <span class="string">"set_background_color"</span>,
@@ -543,8 +543,7 @@ WebMCP:  AI → Website (directly)</code></pre>
       <span class="property">required</span>: [<span class="string">"color"</span>]
     },
     <span class="property">execute</span>: ({ color }) => {
-      document.body.style.backgroundColor = color;
-      document.getElementById(<span class="string">"colorName"</span>).textContent = color;
+      setBackgroundColor(color, <span class="keyword">true</span>); <span class="comment">// true = called by AI</span>
       
       <span class="keyword">return</span> {
         content: [{
@@ -559,6 +558,12 @@ WebMCP:  AI → Website (directly)</code></pre>
 } <span class="keyword">else</span> {
   console.log(<span class="string">"⚠️ WebMCP not available"</span>);
 }</code></pre>
+
+    <div class="highlight">
+      <strong>Tip:</strong> In the demo, we use a shared <span class="inline-code">setBackgroundColor(color, fromAI)</span> function 
+      so both human controls and AI use the same logic. The <span class="inline-code">fromAI</span> flag lets us show a 
+      "🤖 AI changed this!" badge when the tool is called by an agent.
+    </div>
 
     <!-- Try It -->
     <h2>Try It Out!</h2>
